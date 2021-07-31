@@ -1,0 +1,60 @@
+html, root {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+root {
+    margin: 1.5em 0;
+    padding: 0;
+    column-gap: 1.5em; /* Общее расстояние между колонками */
+    font-size: .85em;
+    -moz-column-gap: 1.5em; /* Расстояние между колонками для Firefox */
+    -webkit-column-gap: 1.5em; /* Расстояние между колонками  для Safari, Chrome и iOS */
+}
+
+.Show, .Person {
+    white-space: nowrap;
+    margin-top: 10%;
+    -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  }
+
+.Show ul, .Picture, .Person ul{
+    white-space: normal;	
+	display: inline-block;
+	width: 48%;
+	vertical-align: top;
+    list-style-type:none;
+    font-style: italic;
+}
+
+.Picture {
+    margin-top:  5%;
+    border-radius: 10px;
+}
+
+.showImg, .personImg {
+    border-radius: 10px;
+}
+
+ .Show, .Person {
+
+    border: 6px solid #fff; /* Белая рамка */
+    border-radius: 20px; /* Радиус скругления */
+    width: 521px;	height: 345px; /* Размеры */
+ }
+
+#starButton {
+    display: flex;
+    align-items: center;
+}
+
+.Show, .Person li {
+    margin: 3px;
+}
+
