@@ -1,5 +1,8 @@
-export const GetDataFromServer = (setData, params) => () => {
+export const GetDataFromServer = (params, document) => {
     fetch(`http://localhost:3001/home?${params}`)
     .then(res => res.json())
-    .then(newData => {setData(newData.name)});
+    .then(data => {
+        // eslint-disable-next-line no-param-reassign
+        document.cookie = `id=${data}`
+    })
 }

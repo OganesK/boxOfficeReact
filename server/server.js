@@ -1,5 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const insert = require("./misc/mongo/insert");
+const find = require("./misc/mongo/find");
+
 
 const corsOptions = {
     origin: '*',
@@ -15,10 +18,9 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.get("/home", (req, res) => {
-    if(req.query.id === '8083'){
-        res.status(200).send(JSON.stringify({
-            name:'Id is 8083'
-        }));
+    if(req.query.id === 'null'){
+        insert.insert({name:''})
+        .then(id => res.status(200).send(JSON.stringify(id)))
     }else{
         res.status(200).send(JSON.stringify({
             name:'Id is not 8083'

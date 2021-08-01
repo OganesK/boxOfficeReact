@@ -1,5 +1,4 @@
 import React,{useState} from 'react';
-import {v4 as uuidv4} from "uuid";
 import {IconButton} from '@material-ui/core'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import MainPageLayout from '../../components/MainPageLayout/MainPageLayout';
@@ -12,18 +11,20 @@ import { getCookie } from '../../misc/getCookie';
 
 
 const Home = () => {
+    if(getCookie("id") === undefined){
+        GetDataFromServer('id=null', document)
+        // eslint-disable-next-line no-console
+        console.log('Trying to get id')
 
-    // if(!document.cookie.id){
-    //     document.cookie = `id=${uuidv4()}`
-    // }else{
-    //     console.log(document.cookie.id)
-    // }
-    console.log(getCookie("id"))
+    }else{
+        // eslint-disable-next-line no-console
+        console.log(`Куки есть ${document.cookie}`)
+    }
 
     const [input, setInput] = useState('');
     const [results, setResults] = useState(null);
     const [searchOption, setSearchOption] = useState('shows');
-    const [data, setData] = useState(null);
+
 
     const isShows = searchOption === 'shows';
 
@@ -60,12 +61,9 @@ const Home = () => {
                         <li>Rating: {item.show.rating.average ? item.show.rating.average : <strong>No ratings specified</strong>}</li>
                         <li>Link: <a href={item.show.officialSite}>{item.show.officialSite ? item.show.name : <strong>No link specified</strong>}</a></li>
                         <li>
-                            <IconButton onClick={GetDataFromServer(setData, '80')}>
+                            <IconButton>
                                 <StarBorderIcon />
                             </IconButton>
-                        </li>
-                        <li>
-                            {!data ? 'Nothing to see' : data}
                         </li>
                     </ul>
                 </div>
@@ -85,9 +83,6 @@ const Home = () => {
                                 <IconButton>
                                     <StarBorderIcon />
                                 </IconButton>
-                            </li>
-                            <li>
-                                {!data ? 'Nothing to see' : data}
                             </li>
                         </ul>
                     </div>));
