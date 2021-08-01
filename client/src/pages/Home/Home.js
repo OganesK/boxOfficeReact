@@ -35,9 +35,19 @@ const Home = () => {
         }
     }
 
-    const starButtonClick = (item) => () => {
-        // eslint-disable-next-line no-console
-        console.log(item)
+    const starButtonClick = () => {
+
+        fetch("http://localhost:3001/api", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                re:'act'
+            })
+        }).then(res => {
+            console.log("Request complited. Response: ", res)
+        })
     }
 
 
@@ -56,7 +66,7 @@ const Home = () => {
                         <li>Rating: {item.show.rating.average ? item.show.rating.average : <strong>No ratings specified</strong>}</li>
                         <li>Link: <a href={item.show.officialSite}>{item.show.officialSite ? item.show.name : <strong>No link specified</strong>}</a></li>
                         <li>
-                            <IconButton onClick={starButtonClick(item)} >
+                            <IconButton onClick={starButtonClick} >
                                 <StarBorderIcon />
                             </IconButton>
                         </li>
@@ -75,7 +85,7 @@ const Home = () => {
                             <li>Gender: {item.person.gender}</li>
                             <li>Link: <a href={item.person.url}>{item.person.name}</a></li>
                             <li>
-                                <IconButton onClick={starButtonClick(item)} >
+                                <IconButton onClick={starButtonClick} >
                                     <StarBorderIcon />
                                 </IconButton>
                             </li>
