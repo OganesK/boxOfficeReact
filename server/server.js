@@ -22,8 +22,12 @@ app.get("/home", (req, res) => {
 });
 
 app.post('/api', (req, res) => {
-    console.log(req.body);
-    res.status(200).send('Gotcha');
+    const body = req.body;
+    if(body.id === 8083){
+        res.send('Id is 8083')
+    }else{
+        res.send('Id isnt 8083')
+    }
 });
 
 app.listen(PORT, () => console.log("Server is up"));
