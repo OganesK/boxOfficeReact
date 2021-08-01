@@ -17,14 +17,12 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json());
 
-app.get("/home", (req, res) => {
+app.get("/api", (req, res) => {
     if(req.query.id === 'null'){
         insert.insert({name:''})
         .then(id => res.status(200).send(JSON.stringify(id)))
-    }else{
-        res.status(200).send(JSON.stringify({
-            name:'Id is not 8083'
-        }));
+    }else if(req.query.method === 'newFilm'){
+        
     }
     
 });
