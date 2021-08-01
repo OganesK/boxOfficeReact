@@ -1,14 +1,24 @@
 import React,{useState} from 'react';
+import {v4 as uuidv4} from "uuid";
 import {IconButton} from '@material-ui/core'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import MainPageLayout from '../../components/MainPageLayout/MainPageLayout';
 import { apiGet } from '../../misc/config';
 import './Home.css';
 import { GetDataFromServer } from '../../misc/getDataFromServer';
+import { getCookie } from '../../misc/getCookie';
+
 
 
 
 const Home = () => {
+
+    // if(!document.cookie.id){
+    //     document.cookie = `id=${uuidv4()}`
+    // }else{
+    //     console.log(document.cookie.id)
+    // }
+    console.log(getCookie("id"))
 
     const [input, setInput] = useState('');
     const [results, setResults] = useState(null);
