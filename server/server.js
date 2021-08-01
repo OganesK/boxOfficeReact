@@ -16,12 +16,12 @@ app.use(express.json());
 
 app.get("/home", (req, res) => {
     if(req.query.id === '8083'){
-        res.send(JSON.stringify({
-            name:'Bill'
+        res.status(200).send(JSON.stringify({
+            name:'Id is 8083'
         }));
     }else{
-        res.send(JSON.stringify({
-            name:'Bill'
+        res.status(200).send(JSON.stringify({
+            name:'Id is not 8083'
         }));
     }
     
@@ -36,4 +36,4 @@ app.post('/api', (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log("Server is up"));
+app.listen(PORT, () => console.log(`Server is listening on: ${PORT}`));

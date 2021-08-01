@@ -1,10 +1,10 @@
 import React,{useState} from 'react';
-// import { saveAs } from 'file-saver';
 import {IconButton} from '@material-ui/core'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import MainPageLayout from '../../components/MainPageLayout/MainPageLayout';
 import { apiGet } from '../../misc/config';
 import './Home.css';
+import { GetDataFromServer } from '../../misc/getDataFromServer';
 
 
 
@@ -35,18 +35,6 @@ const Home = () => {
         }
     }
 
-    const GetDataFromServer = () => {
-
-        
-        fetch(`http://localhost:3001/home?id=8083`)
-        .then(res => res.json())
-        .then(newData => {
-            setData(newData.name)
-        })
-             
-    }
-
-
     const renderResults = () => {
         if (results && results.length === 0) {
             return <div>No results :(</div>
@@ -62,7 +50,7 @@ const Home = () => {
                         <li>Rating: {item.show.rating.average ? item.show.rating.average : <strong>No ratings specified</strong>}</li>
                         <li>Link: <a href={item.show.officialSite}>{item.show.officialSite ? item.show.name : <strong>No link specified</strong>}</a></li>
                         <li>
-                            <IconButton onClick={GetDataFromServer}>
+                            <IconButton onClick={GetDataFromServer(setData, '80')}>
                                 <StarBorderIcon />
                             </IconButton>
                         </li>
