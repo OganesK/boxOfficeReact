@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const insert = require("./misc/mongo/insert");
 const find = require("./misc/mongo/find");
+const update = require("./misc/mongo/update");
 
 
 const corsOptions = {
@@ -18,11 +19,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.get("/api", (req, res) => {
+    console.log(req.query.data)
     if(req.query.id === 'null'){
-        insert.insert({name:''})
+        insert.insert({starred:{}})
         .then(id => res.status(200).send(JSON.stringify(id)))
     }else if(req.query.method === 'newFilm'){
-        
+        update.update(req.query.id, req.query.data)
     }
     
 });

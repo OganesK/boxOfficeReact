@@ -9,9 +9,19 @@ module.exports = {update: async function(u_id, data){
         const users = client.db('boxOfficeUsers').collection('users');
         const filter = {_id: new mongoDb.ObjectId(u_id)};
 
+        let newFilm = {};
+        const dataObj = JSON.parse(data);
+        newFilm[dataObj.show.name] = dataObj; 
+        
         const updateDoc = {
-            $set: {
-                `starred.${data.show.name}`: data.show            }
+            $push: {
+                'starred' : newFilm            }
         }
+        const result = await users.updateOne(filter, updateDoc);
+        console.log('Document updated')
+    }finally {
+        await client.close();
+        console.log('Client closed');
     }
-}}
+}
+}

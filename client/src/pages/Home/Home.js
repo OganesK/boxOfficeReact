@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import {IconButton} from '@material-ui/core'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import MainPageLayout from '../../components/MainPageLayout/MainPageLayout';
@@ -11,22 +11,33 @@ import { getCookie } from '../../misc/getCookie';
 
 
 const Home = () => {
-    if(getCookie("id") === undefined){
-        GetDataFromServer('id=null', document)
-        // eslint-disable-next-line no-console
-        console.log('Trying to get id')
-
-    }else{
-        // eslint-disable-next-line no-console
-        console.log(`Куки есть ${document.cookie}`)
-    }
+    
 
     const [input, setInput] = useState('');
     const [results, setResults] = useState(null);
     const [searchOption, setSearchOption] = useState('shows');
+    const [loading, setLoading] = useState(true);
 
 
     const isShows = searchOption === 'shows';
+
+
+    const loadData = async () => {
+        const id = await GetDataFromServer('blabla','id=null');
+        document.cookie = `id=${id}`;
+        setLoading(false);
+    }
+    useEffect(() => {
+        if(getCookie("id") === undefined){
+            loadData()
+            // eslint-disable-next-line no-console
+            console.log('Trying to get id')
+        }else{
+            // eslint-disable-next-line no-console
+            console.log(`Куки есть ${document.cookie}`);
+            setLoading(false);
+        }
+    }, [])
 
 
     const onInputChange = ev => {
@@ -46,6 +57,11 @@ const Home = () => {
         }
     }
 
+    const starredClickHandler = (item) => {
+        GetDataFromServer('newFilm',`id=${getCookie('id')}&data=${JSON.stringify(item)}`)
+    }
+
+
     const renderResults = () => {
         if (results && results.length === 0) {
             return <div>No results :(</div>
@@ -61,7 +77,7 @@ const Home = () => {
                         <li>Rating: {item.show.rating.average ? item.show.rating.average : <strong>No ratings specified</strong>}</li>
                         <li>Link: <a href={item.show.officialSite}>{item.show.officialSite ? item.show.name : <strong>No link specified</strong>}</a></li>
                         <li>
-                            <IconButton>
+                            <IconButton onClick={() => {starredClickHandler(item)}}>
                                 <StarBorderIcon />
                             </IconButton>
                         </li>
@@ -94,6 +110,8 @@ const Home = () => {
     const onRadioChange = (ev) => {
         setSearchOption(ev.target.value)
     }
+
+    if(loading) return <div>Loading...</div>
 
     return(
         <MainPageLayout>
