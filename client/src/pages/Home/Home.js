@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import {IconButton} from '@material-ui/core'
+import {IconButton} from '@material-ui/core';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import MainPageLayout from '../../components/MainPageLayout/MainPageLayout';
 import { apiGet } from '../../misc/config';
@@ -59,6 +59,8 @@ const Home = () => {
 
     const starredClickHandler = (item) => {
         GetDataFromServer('newFilm',`id=${getCookie('id')}&data=${JSON.stringify(item)}`)
+        // eslint-disable-next-line no-alert
+        .then(answ => alert(answ));
     }
 
 

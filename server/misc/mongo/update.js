@@ -1,5 +1,6 @@
 const mongoDb = require('mongodb');
 const uri = "mongodb+srv://kostjaog:qwertyt123e5@cluster0.dp8zu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  
 
 module.exports = {update: async function(u_id, data){
     const client = new mongoDb.MongoClient(uri);
@@ -9,16 +10,31 @@ module.exports = {update: async function(u_id, data){
         const users = client.db('boxOfficeUsers').collection('users');
         const filter = {_id: new mongoDb.ObjectId(u_id)};
 
+        const user = await users.findOne(filter);
+        const films = user.starred;
+        
+        
         let newFilm = {};
         const dataObj = JSON.parse(data);
-        newFilm[dataObj.show.name] = dataObj; 
+
+
+        if(films.filter(film => {
+            return film.hasOwnProperty(dataObj.show.id.toString())
+        }).length === 0){
+            newFilm[dataObj.show.id] = dataObj; 
         
-        const updateDoc = {
-            $push: {
-                'starred' : newFilm            }
+            const updateDoc = {
+                $push: {
+                    'starred' : newFilm            }
+                }
+            const result = await users.updateOne(filter, updateDoc);
+            console.log('Film inserted')
+            return 'Film inserted'
+        } else {
+            console.log('Film already exists')
+            return 'Film already exists'
         }
-        const result = await users.updateOne(filter, updateDoc);
-        console.log('Document updated')
+        
     }finally {
         await client.close();
         console.log('Client closed');

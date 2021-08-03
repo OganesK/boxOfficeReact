@@ -19,12 +19,15 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.get("/api", (req, res) => {
-    console.log(req.query.data)
     if(req.query.id === 'null'){
-        insert.insert({starred:{}})
-        .then(id => res.status(200).send(JSON.stringify(id)))
+        insert.insert({starred:[]})
+        .then(id => res.status(200).send(JSON.stringify(id)));
     }else if(req.query.method === 'newFilm'){
         update.update(req.query.id, req.query.data)
+        .then(answer => res.status(200).send(JSON.stringify(answer)));
+    }else if(req.query.method === 'listFilms') {
+        find.find(req.query.id)
+        .then(answ => res.status(200).send(JSON.stringify(answ)));
     }
     
 });
