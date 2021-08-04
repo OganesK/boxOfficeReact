@@ -12,16 +12,17 @@ module.exports = {update: async function(u_id, data){
 
         const user = await users.findOne(filter);
         const films = user.starred;
+
         
         
         let newFilm = {};
         const dataObj = JSON.parse(data);
 
 
-        if(films.filter(film => {
-            return film.hasOwnProperty(dataObj.show.id.toString())
-        }).length === 0){
-            newFilm[dataObj.show.id] = dataObj; 
+        if(films.filter(film => film.film.id === dataObj.show.id).length === 0){
+
+            newFilm['film'] = {id: dataObj.show.id,
+                                film: dataObj}; 
         
             const updateDoc = {
                 $push: {

@@ -59,8 +59,9 @@ const Home = () => {
 
     const starredClickHandler = (item) => {
         GetDataFromServer('newFilm',`id=${getCookie('id')}&data=${JSON.stringify(item)}`)
+        .then(answ => answ.json())
         // eslint-disable-next-line no-alert
-        .then(answ => alert(answ));
+        .then(res => alert(res));
     }
 
 
@@ -142,7 +143,7 @@ const Home = () => {
             </div>
 
             <button type="button" onClick={onSearch}>Search</button>
-            {renderResults()}
+            {console.log(renderResults())}
         </MainPageLayout>
     )
 }
