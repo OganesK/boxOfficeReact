@@ -98,11 +98,6 @@ const Home = () => {
                             <li>Country: {item.person.country ? item.person.country.name : null}</li>
                             <li>Gender: {item.person.gender}</li>
                             <li>Link: <a href={item.person.url}>{item.person.name}</a></li>
-                            <li>
-                                <IconButton>
-                                    <StarBorderIcon />
-                                </IconButton>
-                            </li>
                         </ul>
                     </div>));
         }
@@ -143,7 +138,7 @@ const Home = () => {
             </div>
 
             <button type="button" onClick={onSearch}>Search</button>
-            {console.log(renderResults())}
+            {renderResults()}
         </MainPageLayout>
     )
 }

@@ -1,0 +1,19 @@
+version: "3"
+services:
+  api:
+    build: ./server
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    container_name: boxOffice-server
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    container_name: boxOffice-client
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: blog-db
