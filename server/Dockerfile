@@ -1,17 +1,14 @@
-FROM node:12-alpine as builder
+FROM node:12.18.3
+
+LABEL version="1.0"
+
 WORKDIR /app
-COPY package.json /app/package.json
-RUN apk --no-cache add --virtual builds-deps build-base python
-RUN npm install
-COPY . /app
-RUN npm run build
-FROM node:12-alpine
-WORKDIR /app
-COPY --from=builder /app/dist /app
-COPY package.json /app/package.json
-RUN apk --no-cache add --virtual builds-deps build-base python
-COPY . ./
-RUN npm install --only=prod
+
+COPY ["package.json", "package-lock.json", "./"]
+RUN ls
+RUN npm install --production
+COPY . .
+
 EXPOSE 3001
-USER node
+
 CMD ["node", "server.js"]

@@ -1,19 +1,17 @@
-version: "3"
+version: '3'
+
 services:
-  api:
-    build: ./server
+  backend:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    image: "kostjaog/box-office-react-server"
     ports:
       - "3001:3001"
-    depends_on:
-      - db
-    container_name: boxOffice-server
-  client:
-    build: ./client
+  frontend:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    image: "kostjaog/box-office-react-client"
     ports:
       - "3000:3000"
-    container_name: boxOffice-client
-  db:
-    image: mongo
-    ports:
-      - "27017:27017"
-    container_name: blog-db
