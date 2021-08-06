@@ -5,6 +5,7 @@ const insert = require("./misc/mongo/insert");
 const find = require("./misc/mongo/find");
 const update = require("./misc/mongo/update");
 const deleteFilm = require("./misc/mongo/delete")
+const path = require('path');
 
 const uri = "mongodb+srv://kostjaog:qwertyt123e5@cluster0.dp8zu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new mongoDb.MongoClient(uri);
@@ -19,7 +20,7 @@ connectClient(client).then(() => {
     }
     
     const app = express();
-    
+
     app.use(cors(corsOptions));
     
     const PORT = process.env.PORT || 3001;
@@ -52,6 +53,15 @@ connectClient(client).then(() => {
             res.send({answer:"Id is not 8083"}.json())
         }
     });
+
+    if(process.env.NODE_ENV === 'production'){
+        console.debug("I'm here!");
+        app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+        })
+    }
+    
     
     app.listen(PORT, () => console.log(`Server is listening on: ${PORT}`));
 })
